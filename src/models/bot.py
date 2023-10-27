@@ -1,0 +1,35 @@
+from dotenv import load_dotenv
+import discord
+import discord.ext.commands as commands
+import discord.emoji
+import os, re
+
+load_dotenv()
+
+class Bot(commands.Bot):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def setup(self):
+        self.run(os.getenv('BOT_TOKEN'))
+
+    async def on_ready(self):
+        await self.add_cog(BotEventsCog(self))
+        print('Bot is ready.')
+
+class BotEventsCog(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
+
+    @commands.Cog.listener()
+    async def on_ready(self):
+        print('Bot is ready!')
+        print('Name: {}'.format(self.bot.user.name))
+        print('ID: {}'.format(self.bot.user.id))
+
+    @commands.Cog.listener()
+    async def on_message(self, message):
+        if message.author == self.bot.user:
+            return
+        if message.content.startswith('!hello'):
+            await message.channel.send('Hello!')
