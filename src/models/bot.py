@@ -10,8 +10,8 @@ class Bot(commands.Bot):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-    def setup(self):
-        self.run(os.getenv('BOT_TOKEN'))
+    def setup(self, token):
+        self.run(token)
 
     async def on_ready(self):
         await self.add_cog(BotEventsCog(self))
