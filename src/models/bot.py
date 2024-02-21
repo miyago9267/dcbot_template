@@ -1,8 +1,5 @@
 from dotenv import load_dotenv
-import discord
 import discord.ext.commands as commands
-import discord.emoji
-import os, re
 
 load_dotenv()
 
@@ -15,7 +12,6 @@ class Bot(commands.Bot):
 
     async def on_ready(self):
         await self.add_cog(BotEventsCog(self))
-        print('Bot is ready.')
 
 class BotEventsCog(commands.Cog):
     def __init__(self, bot):
